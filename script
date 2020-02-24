@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [AmazonDb]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Database [AmazonDb]    Script Date: 24-02-2020 10:29:30 ******/
 CREATE DATABASE [AmazonDb]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -77,7 +77,7 @@ ALTER DATABASE [AmazonDb] SET QUERY_STORE = OFF
 GO
 USE [AmazonDb]
 GO
-/****** Object:  Table [dbo].[CartItems]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[CartItems]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -93,38 +93,7 @@ CREATE TABLE [dbo].[CartItems](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Products]    Script Date: 24-02-2020 10:19:15 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Products](
-	[ProductId] [int] IDENTITY(1,1) NOT NULL,
-	[ProductSubCategoryId] [int] NOT NULL,
-	[SellerId] [int] NOT NULL,
- CONSTRAINT [PK_Products] PRIMARY KEY CLUSTERED 
-(
-	[ProductId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Carts]    Script Date: 24-02-2020 10:19:15 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Carts](
-	[CartId] [int] IDENTITY(1,1) NOT NULL,
-	[Quantity] [int] NOT NULL,
-	[CartValue] [int] NOT NULL,
-	[UserId] [int] NOT NULL,
- CONSTRAINT [PK_Carts] PRIMARY KEY CLUSTERED 
-(
-	[CartId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Sellers]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Sellers]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -140,13 +109,45 @@ CREATE TABLE [dbo].[Sellers](
 	[MaterialId] [int] NULL,
 	[ColorId] [int] NULL,
 	[LanguageId] [int] NULL,
+	[RoleId] [int] NOT NULL,
  CONSTRAINT [PK_Sellers] PRIMARY KEY CLUSTERED 
 (
 	[SellerId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  View [dbo].[vCartItems]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Products]    Script Date: 24-02-2020 10:29:30 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Products](
+	[ProductId] [int] IDENTITY(1,1) NOT NULL,
+	[ProductSubCategoryId] [int] NOT NULL,
+	[SellerId] [int] NOT NULL,
+ CONSTRAINT [PK_Products] PRIMARY KEY CLUSTERED 
+(
+	[ProductId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Carts]    Script Date: 24-02-2020 10:29:30 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Carts](
+	[CartId] [int] IDENTITY(1,1) NOT NULL,
+	[Quantity] [int] NOT NULL,
+	[CartValue] [int] NOT NULL,
+	[UserId] [int] NOT NULL,
+ CONSTRAINT [PK_Carts] PRIMARY KEY CLUSTERED 
+(
+	[CartId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  View [dbo].[vCartItems]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -159,7 +160,7 @@ FROM            dbo.Products INNER JOIN
                          dbo.CartItems ON dbo.Products.ProductId = dbo.CartItems.ProductId INNER JOIN
                          dbo.Carts ON dbo.CartItems.CartId = dbo.Carts.CartId
 GO
-/****** Object:  Table [dbo].[Advertisements]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Advertisements]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -175,7 +176,7 @@ CREATE TABLE [dbo].[Advertisements](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Discounts]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Discounts]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -193,7 +194,7 @@ CREATE TABLE [dbo].[Discounts](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Offers]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Offers]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -209,7 +210,7 @@ CREATE TABLE [dbo].[Offers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  View [dbo].[vAdvertisements]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  View [dbo].[vAdvertisements]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -221,7 +222,26 @@ FROM            dbo.Advertisements INNER JOIN
                          dbo.Offers ON dbo.Advertisements.OfferId = dbo.Offers.OfferId INNER JOIN
                          dbo.Discounts ON dbo.Offers.DiscountId = dbo.Discounts.DiscountId
 GO
-/****** Object:  Table [dbo].[Payments]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 24-02-2020 10:29:30 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Users](
+	[UserId] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [varchar](50) NOT NULL,
+	[MobileNumber] [bigint] NOT NULL,
+	[EmailId] [varchar](50) NOT NULL,
+	[Password] [varchar](50) NOT NULL,
+	[CreatedDate] [datetimeoffset](7) NOT NULL,
+	[RoleId] [int] NOT NULL,
+ CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Payments]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -238,7 +258,7 @@ CREATE TABLE [dbo].[Payments](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Orders]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Orders]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -254,7 +274,7 @@ CREATE TABLE [dbo].[Orders](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Invoices]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Invoices]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -269,25 +289,7 @@ CREATE TABLE [dbo].[Invoices](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 24-02-2020 10:19:15 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Users](
-	[UserId] [int] IDENTITY(1,1) NOT NULL,
-	[UserName] [varchar](50) NOT NULL,
-	[MobileNumber] [bigint] NOT NULL,
-	[EmailId] [varchar](50) NOT NULL,
-	[Password] [varchar](50) NOT NULL,
-	[CreatedDate] [datetimeoffset](7) NOT NULL,
- CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
-(
-	[UserId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  View [dbo].[vInvoices]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  View [dbo].[vInvoices]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -304,7 +306,7 @@ FROM            dbo.Invoices INNER JOIN
                          dbo.Carts ON dbo.Carts.UserId = dbo.Users.UserId INNER JOIN
                          dbo.CartItems ON dbo.Carts.CartId = dbo.CartItems.CartId
 GO
-/****** Object:  Table [dbo].[Brands]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Brands]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -318,7 +320,7 @@ CREATE TABLE [dbo].[Brands](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  View [dbo].[vBrands]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  View [dbo].[vBrands]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -329,7 +331,7 @@ SELECT        dbo.Sellers.ProductName
 FROM            dbo.Sellers INNER JOIN
                          dbo.Brands ON dbo.Sellers.BrandId = dbo.Brands.BrandId
 GO
-/****** Object:  Table [dbo].[Sizes]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Sizes]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -343,7 +345,7 @@ CREATE TABLE [dbo].[Sizes](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  View [dbo].[vSizes]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  View [dbo].[vSizes]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -354,7 +356,7 @@ SELECT        dbo.Sellers.ProductName
 FROM            dbo.Sellers INNER JOIN
                          dbo.Sizes ON dbo.Sellers.SizeId = dbo.Sizes.SizeId
 GO
-/****** Object:  Table [dbo].[Materials]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Materials]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -368,7 +370,7 @@ CREATE TABLE [dbo].[Materials](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  View [dbo].[vMaterials]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  View [dbo].[vMaterials]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -379,7 +381,7 @@ SELECT        dbo.Sellers.ProductName
 FROM            dbo.Sellers INNER JOIN
                          dbo.Materials ON dbo.Sellers.MaterialId = dbo.Materials.MaterialId
 GO
-/****** Object:  Table [dbo].[Colors]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Colors]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -393,7 +395,7 @@ CREATE TABLE [dbo].[Colors](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  View [dbo].[vColors]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  View [dbo].[vColors]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -404,7 +406,7 @@ SELECT        dbo.Sellers.ProductName
 FROM            dbo.Sellers INNER JOIN
                          dbo.Colors ON dbo.Sellers.ColorId = dbo.Colors.ColorId
 GO
-/****** Object:  Table [dbo].[Languages]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Languages]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -418,7 +420,7 @@ CREATE TABLE [dbo].[Languages](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  View [dbo].[vLanguages]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  View [dbo].[vLanguages]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -429,17 +431,18 @@ SELECT        dbo.Sellers.ProductName
 FROM            dbo.Sellers INNER JOIN
                          dbo.Languages ON dbo.Sellers.LanguageId = dbo.Languages.LanguageId
 GO
-/****** Object:  Table [dbo].[Admins]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Admins]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Admins](
 	[UserName] [varchar](50) NOT NULL,
-	[Password] [varchar](50) NOT NULL
+	[Password] [varchar](50) NOT NULL,
+	[RoleId] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ApplicationObjects]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[ApplicationObjects]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -454,7 +457,7 @@ CREATE TABLE [dbo].[ApplicationObjects](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ApplicationObjectTypes]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[ApplicationObjectTypes]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -468,7 +471,7 @@ CREATE TABLE [dbo].[ApplicationObjectTypes](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[BankDetails]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[BankDetails]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -484,7 +487,7 @@ CREATE TABLE [dbo].[BankDetails](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Cards]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Cards]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -502,7 +505,7 @@ CREATE TABLE [dbo].[Cards](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[FeedBacks]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[FeedBacks]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -520,7 +523,7 @@ CREATE TABLE [dbo].[FeedBacks](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Musics]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Musics]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -537,7 +540,7 @@ CREATE TABLE [dbo].[Musics](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[MusicSubCategories]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[MusicSubCategories]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -553,7 +556,7 @@ CREATE TABLE [dbo].[MusicSubCategories](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[OrderDetails]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[OrderDetails]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -571,7 +574,7 @@ CREATE TABLE [dbo].[OrderDetails](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Otps]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Otps]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -588,7 +591,7 @@ CREATE TABLE [dbo].[Otps](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PrimeMusics]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[PrimeMusics]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -604,7 +607,7 @@ CREATE TABLE [dbo].[PrimeMusics](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ProductCategories]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[ProductCategories]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -620,7 +623,7 @@ CREATE TABLE [dbo].[ProductCategories](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ProductSubCategories]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[ProductSubCategories]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -635,7 +638,7 @@ CREATE TABLE [dbo].[ProductSubCategories](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PromoCodes]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[PromoCodes]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -652,7 +655,7 @@ CREATE TABLE [dbo].[PromoCodes](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[RolePermissions]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[RolePermissions]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -670,7 +673,7 @@ CREATE TABLE [dbo].[RolePermissions](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Roles]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Roles]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -684,7 +687,7 @@ CREATE TABLE [dbo].[Roles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[SellerDetails]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[SellerDetails]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -703,7 +706,7 @@ CREATE TABLE [dbo].[SellerDetails](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ShippingDetails]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[ShippingDetails]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -719,7 +722,7 @@ CREATE TABLE [dbo].[ShippingDetails](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ShippingFeeDetails]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[ShippingFeeDetails]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -736,7 +739,7 @@ CREATE TABLE [dbo].[ShippingFeeDetails](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Stores]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[Stores]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -754,7 +757,7 @@ CREATE TABLE [dbo].[Stores](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserAddresses]    Script Date: 24-02-2020 10:19:15 ******/
+/****** Object:  Table [dbo].[UserAddresses]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -773,6 +776,11 @@ CREATE TABLE [dbo].[UserAddresses](
 	[UserAddressId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Admins]  WITH CHECK ADD  CONSTRAINT [FK_Admins_Roles] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[Roles] ([RoleId])
+GO
+ALTER TABLE [dbo].[Admins] CHECK CONSTRAINT [FK_Admins_Roles]
 GO
 ALTER TABLE [dbo].[Advertisements]  WITH CHECK ADD  CONSTRAINT [FK_Advertisements_ApplicationObjects] FOREIGN KEY([ApplicationObjectId])
 REFERENCES [dbo].[ApplicationObjects] ([ApplicationObjectId])
@@ -979,6 +987,11 @@ REFERENCES [dbo].[Materials] ([MaterialId])
 GO
 ALTER TABLE [dbo].[Sellers] CHECK CONSTRAINT [FK_Sellers_Materials]
 GO
+ALTER TABLE [dbo].[Sellers]  WITH CHECK ADD  CONSTRAINT [FK_Sellers_Roles] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[Roles] ([RoleId])
+GO
+ALTER TABLE [dbo].[Sellers] CHECK CONSTRAINT [FK_Sellers_Roles]
+GO
 ALTER TABLE [dbo].[Sellers]  WITH CHECK ADD  CONSTRAINT [FK_Sellers_Sizes] FOREIGN KEY([SizeId])
 REFERENCES [dbo].[Sizes] ([SizeId])
 GO
@@ -1004,7 +1017,12 @@ REFERENCES [dbo].[Users] ([UserId])
 GO
 ALTER TABLE [dbo].[UserAddresses] CHECK CONSTRAINT [FK_UserAddresses_Users]
 GO
-/****** Object:  StoredProcedure [dbo].[spSearchProducts]    Script Date: 24-02-2020 10:19:15 ******/
+ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [FK_Users_Roles] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[Roles] ([RoleId])
+GO
+ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [FK_Users_Roles]
+GO
+/****** Object:  StoredProcedure [dbo].[spSearchProducts]    Script Date: 24-02-2020 10:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
